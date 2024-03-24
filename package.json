@@ -1,0 +1,44 @@
+{
+  "name": "featuregraph-agent",
+  "version": "1.0.0",
+  "description": "featuregraph-agent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artemkv/featuregraph-agent.git"
+  },
+  "author": {
+    "name": "artemkv",
+    "email": "artemkv@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "http-server": "^14.1.1",
+    "npm-watch": "^0.11.0",
+    "rimraf": "^5.0.5",
+    "uglify-js": "^3.17.4"
+  },
+  "watch": {
+    "dev": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js",
+      "quiet": false
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "bundle": "browserify src/index.js -o dist/bundle.js",
+    "uglify": "uglifyjs dist/bundle.js -o dist/bundle.min.js",
+    "dev": "npm run clean && npm run bundle && npm run uglify",
+    "prod": "npm run clean && npm run bundle && npm run uglify",
+    "serve": "http-server ./dist -p 8111 -c-1",
+    "watch": "npm-watch dev",
+    "start": "npm run clean && npm run bundle && npm run uglify && npm run watch"
+  },
+  "dependencies": {
+    "msg-channel-js": "^1.0.0",
+    "uuid": "^9.0.1"
+  }
+}
