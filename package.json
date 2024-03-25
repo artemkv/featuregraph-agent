@@ -29,8 +29,8 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "bundle": "browserify src/index.js -o dist/bundle.js",
-    "uglify": "uglifyjs dist/bundle.js -o dist/bundle.min.js",
+    "bundle": "browserify src/index.js -o dist/featuregraph.bundle.js",
+    "uglify": "uglifyjs dist/featuregraph.bundle.js -o dist/featuregraph.bundle.min.js",
     "dev": "npm run clean && npm run bundle && npm run uglify",
     "prod": "npm run clean && npm run bundle && npm run uglify",
     "serve": "http-server ./dist -p 8111 -c-1",

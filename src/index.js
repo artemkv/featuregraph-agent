@@ -70,7 +70,6 @@ const saveLastEvent = evt => {
     sessionStorage.setItem(SESSION_STORAGE_PREV_EVT, JSON.stringify(evt));
 };
 
-// TODO: think about error handling
 const processEvent = async msg => {
     const e = msg.e;
     const target = e.target;
@@ -108,4 +107,11 @@ const processEvent = async msg => {
     await postJson(INGEST_ENDPOINT, events);
 };
 
-init();
+(async function () {
+    try {
+        await init();
+    } catch (e) {
+        console.error('Failed to initialize FeatureGraph agent.', e);
+    }
+}());
+
