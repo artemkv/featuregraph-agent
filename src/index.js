@@ -1,15 +1,16 @@
 const { makeChannel } = require('msg-channel-js');
 const { v4: uuidv4 } = require('uuid');
-const { postJson } = require('./restapi');
+const { getJson, postJson } = require('./restapi');
 
 const FG_GLOBAL_NAMESPACE = 'featuregraph.net';
 const SESSION_STORAGE_PREV_EVT = 'featuregraph.net.prev_evt';
 // TODO:
 const INGEST_ENDPOINT = 'http://localhost:8600/events';
+const CONFIG_ENDPOINT = 'http://localhost:8600/appconfig';
 
 let config = {};
 
-function init() {
+const init = async () => {
     // Sanitize the config
     config = window[FG_GLOBAL_NAMESPACE].config;
     if (!config.acc) {
@@ -19,7 +20,14 @@ function init() {
         throw new Error('Application ID ("aid") must be provided.');
     }
 
-    // TODO: here we should retrieve the selectors
+    const appConfig = await getJson(`${CONFIG_ENDPOINT}/${config.acc}/${config.aid}`);
+    // TODO: validate the format
+    try {
+        const parsed = JSON.parse(appConfig.config);
+        config.feature_selectors = parsed.feature_selectors;
+    } catch {
+        throw new Error('Invalid application config.');
+    }
 
     // Detect prod environment
     if (config.prod_hostname && config.prod_hostname === window.location.hostname) {

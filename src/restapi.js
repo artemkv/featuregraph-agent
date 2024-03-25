@@ -28,6 +28,21 @@ function toJson(response) {
     return response.json();
 }
 
+function toData(json) {
+    return json.data;
+}
+
+function getJson(url) {
+    return fetch(
+        url,
+        {
+            mode: 'cors'
+        })
+        .then(handleErrors)
+        .then(toJson)
+        .then(toData);
+}
+
 function postJson(url, data) {
     const headers = {
         'Content-Type': 'application/json'
@@ -47,5 +62,6 @@ function postJson(url, data) {
 }
 
 module.exports = {
+    getJson,
     postJson
 };
