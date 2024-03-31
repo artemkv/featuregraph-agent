@@ -30,12 +30,13 @@
   "scripts": {
     "clean": "rimraf dist",
     "bundle": "browserify src/index.js -o dist/featuregraph.bundle.js",
-    "uglify": "uglifyjs dist/featuregraph.bundle.js -o dist/featuregraph.bundle.min.js",
-    "dev": "npm run clean && npm run bundle && npm run uglify",
-    "prod": "npm run clean && npm run bundle && npm run uglify",
+    "uglify-dev": "uglifyjs dist/featuregraph.bundle.js -cm -o dist/featuregraph.bundle.min.js --source-map \"content=inline,filename='featuregraph.bundle.min.js',url='featuregraph.bundle.min.js.map'\"",
+    "uglify-prod": "uglifyjs dist/featuregraph.bundle.js -cm -o dist/featuregraph.bundle.min.js",
+    "dev": "npm run clean && npm run bundle && npm run uglify-dev",
+    "prod": "npm run clean && npm run bundle && npm run uglify-prod",
     "serve": "http-server ./dist -p 8111 -c-1",
     "watch": "npm-watch dev",
-    "start": "npm run clean && npm run bundle && npm run uglify && npm run watch"
+    "start": "npm run dev && npm run watch"
   },
   "dependencies": {
     "msg-channel-js": "^1.0.0",

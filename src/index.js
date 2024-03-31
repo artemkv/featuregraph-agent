@@ -2,11 +2,11 @@ const { makeChannel } = require('msg-channel-js');
 const { v4: uuidv4 } = require('uuid');
 const { getJson, postJson } = require('./restapi');
 
+const VERSION = '0.1';
 const FG_GLOBAL_NAMESPACE = 'featuregraph.net';
 const SESSION_STORAGE_PREV_EVT = 'featuregraph.net.prev_evt';
-// TODO:
-const INGEST_ENDPOINT = 'http://localhost:8600/events';
-const CONFIG_ENDPOINT = 'http://localhost:8600/appconfig';
+const INGEST_ENDPOINT = 'https://services.featuregraph.net:8060/events';
+const CONFIG_ENDPOINT = 'https://services.featuregraph.net:8060/appconfig';
 
 let config = {};
 
@@ -42,6 +42,8 @@ const init = async () => {
 
     // Initialization is complete, now we can start processing messages
     channel.attachHandler(processEvent);
+
+    console.log(`Initialized FeatureGraph (v${VERSION})`);
 }
 
 const attachEventHandlers = (channel) => {
